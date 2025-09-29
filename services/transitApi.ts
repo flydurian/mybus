@@ -33,6 +33,10 @@ const MOCK_SUBWAY_STATIONS = [
   { id: 'ss_3', name: '시청', line: '1', coords: { lat: 37.5658, lon: 126.9780 }, exitNumber: 1 },
   { id: 'ss_4', name: '홍대입구', line: '2', coords: { lat: 37.557, lon: 126.924 }, exitNumber: 9 },
   { id: 'ss_5', name: '잠실', line: '2', coords: { lat: 37.5133, lon: 127.1001 }, exitNumber: 1 },
+  { id: 'ss_6', name: '종각', line: '1', coords: { lat: 37.5702, lon: 126.9827 }, exitNumber: 3 },
+  { id: 'ss_7', name: '압구정', line: '3', coords: { lat: 37.5272, lon: 127.0285 }, exitNumber: 4 },
+  { id: 'ss_8', name: '명동', line: '4', coords: { lat: 37.5636, lon: 126.9826 }, exitNumber: 6 },
+  { id: 'ss_9', name: '왕십리', line: '5', coords: { lat: 37.5612, lon: 127.0370 }, exitNumber: 2 },
 ];
 
 const MOCK_BUS_ROUTES: BusRoute[] = [

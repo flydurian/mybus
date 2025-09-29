@@ -9,10 +9,16 @@ type FavoriteItemCardProps = {
   item: BusStop | SubwayStation | BusRoute | SubwayLine;
 };
 
-const ArrivalInfo: React.FC<{ arrival: Arrival, color: string }> = ({ arrival, color }) => (
+const ArrivalInfo: React.FC<{ arrival: Arrival, color: string, customColor?: string }> = ({ arrival, color, customColor }) => (
     <div className="flex items-center justify-between text-sm py-1.5">
         <div className="flex items-center truncate">
-            <span className={`font-bold w-16 ${color}`}>{arrival.routeName}</span>
+            <span 
+                className="font-bold w-16"
+                style={color === 'custom' ? { color: customColor } : undefined}
+            >
+                {color !== 'custom' && <span className={color}>{arrival.routeName}</span>}
+                {color === 'custom' && arrival.routeName}
+            </span>
             <span className="text-gray-600 dark:text-gray-300 truncate">{arrival.destination}</span>
         </div>
         <div className="text-right flex-shrink-0">
@@ -48,8 +54,8 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
                 </h3>
             </div>
             <div className="space-y-1">
-                {item.upboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`u-${i}`} arrival={arr} color={`text-[${item.color || '#666666'}]`} />)}
-                {item.downboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`d-${i}`} arrival={arr} color={`text-[${item.color || '#666666'}]`} />)}
+                {item.upboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`u-${i}`} arrival={arr} color="custom" customColor={item.color || '#666666'} />)}
+                {item.downboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`d-${i}`} arrival={arr} color="custom" customColor={item.color || '#666666'} />)}
             </div>
           </>
         );

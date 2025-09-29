@@ -10,10 +10,16 @@ type TransitStopItemProps = {
   item: BusStop | SubwayStation;
 };
 
-const ArrivalInfo: React.FC<{ arrival: Arrival, color: string }> = ({ arrival, color }) => (
+const ArrivalInfo: React.FC<{ arrival: Arrival, color: string, customColor?: string }> = ({ arrival, color, customColor }) => (
     <div className="flex items-center justify-between text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-b-0">
         <div className="flex items-center">
-            <span className={`font-bold w-16 ${color}`}>{arrival.routeName}</span>
+            <span 
+                className="font-bold w-16"
+                style={color === 'custom' ? { color: customColor } : undefined}
+            >
+                {color !== 'custom' && <span className={color}>{arrival.routeName}</span>}
+                {color === 'custom' && arrival.routeName}
+            </span>
             <span className="text-gray-600 dark:text-gray-300">{arrival.destination}</span>
         </div>
         <div className="text-right">
@@ -85,11 +91,11 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                     <>
                         {item.upboundArrivals.length > 0 && <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">상행</div>}
                         {item.upboundArrivals.map((arrival, index) => (
-                             <ArrivalInfo key={`up-${index}`} arrival={arrival} color={`text-[${item.color || '#666666'}]`} />
+                             <ArrivalInfo key={`up-${index}`} arrival={arrival} color="custom" customColor={item.color || '#666666'} />
                         ))}
                          {item.downboundArrivals.length > 0 && <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mt-3 mb-1">하행</div>}
                         {item.downboundArrivals.map((arrival, index) => (
-                           <ArrivalInfo key={`down-${index}`} arrival={arrival} color={`text-[${item.color || '#666666'}]`} />
+                           <ArrivalInfo key={`down-${index}`} arrival={arrival} color="custom" customColor={item.color || '#666666'} />
                         ))}
                     </>
                 )}
