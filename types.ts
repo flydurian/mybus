@@ -7,6 +7,8 @@ export type Arrival = {
   routeName: string;
   destination: string;
   timeMinutes: number;
+  isLowFloor?: boolean; // 저상버스 여부
+  nextArrival?: number; // 다음 도착 시간 (분)
 };
 
 export type BusStop = {

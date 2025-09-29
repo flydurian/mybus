@@ -65,12 +65,20 @@ const calculateDistance = (coords1: Coordinates, coords2: Coordinates) => {
 };
 
 const generateBusArrivals = (): Arrival[] => {
-  const count = Math.floor(Math.random() * 3) + 1;
-  return Array.from({ length: count }, () => ({
-    routeName: BUS_NAMES[Math.floor(Math.random() * BUS_NAMES.length)],
-    destination: '회차지',
-    timeMinutes: getRandomTime(),
-  }));
+  const count = Math.floor(Math.random() * 2) + 1; // 최대 2개로 제한
+  return Array.from({ length: count }, (_, index) => {
+    const routeName = BUS_NAMES[Math.floor(Math.random() * BUS_NAMES.length)];
+    const timeMinutes = getRandomTime();
+    const nextTime = timeMinutes + Math.floor(Math.random() * 10) + 3; // 다음 편은 3-12분 후
+    
+    return {
+      routeName,
+      destination: '회차지',
+      timeMinutes,
+      isLowFloor: Math.random() > 0.5, // 50% 확률로 저상버스
+      nextArrival: index === 0 ? nextTime : undefined, // 첫 번째만 다음 도착 시간 표시
+    };
+  });
 };
 
 const generateSubwayArrivals = (): Arrival[] => {

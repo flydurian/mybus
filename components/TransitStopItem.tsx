@@ -12,19 +12,35 @@ type TransitStopItemProps = {
 
 const ArrivalInfo: React.FC<{ arrival: Arrival, color: string, customColor?: string }> = ({ arrival, color, customColor }) => (
     <div className="flex items-center justify-between text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-b-0">
-        <div className="flex items-center">
+        <div className="flex items-center flex-grow min-w-0">
             <span 
-                className="font-bold w-16"
+                className="font-bold w-16 flex-shrink-0"
                 style={color === 'custom' ? { color: customColor } : undefined}
             >
                 {color !== 'custom' && <span className={color}>{arrival.routeName}</span>}
                 {color === 'custom' && arrival.routeName}
             </span>
-            <span className="text-gray-600 dark:text-gray-300">{arrival.destination}</span>
+            <div className="flex items-center space-x-2 min-w-0">
+                <span className="text-gray-600 dark:text-gray-300 truncate">{arrival.destination}</span>
+                {arrival.isLowFloor && (
+                    <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-0.5 rounded-full flex-shrink-0">
+                        저상
+                    </span>
+                )}
+            </div>
         </div>
-        <div className="text-right">
-            <span className="font-semibold text-blue-600 dark:text-blue-400">{arrival.timeMinutes}분</span>
-            <span className="text-gray-500 dark:text-gray-400 text-xs"> 후 도착</span>
+        <div className="text-right flex-shrink-0">
+            <div className="space-y-1">
+                <div>
+                    <span className="font-semibold text-blue-600 dark:text-blue-400">{arrival.timeMinutes}분</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-xs"> 후 도착</span>
+                </div>
+                {arrival.nextArrival && (
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                        다음 {arrival.nextArrival}분
+                    </div>
+                )}
+            </div>
         </div>
     </div>
 );
