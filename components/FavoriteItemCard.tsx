@@ -43,7 +43,9 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
           <>
             <div className="flex items-center mb-2">
                 <SubwayIcon className="w-5 h-5 mr-3 text-orange-500" />
-                <h3 className="font-bold text-gray-800 dark:text-gray-100">{item.name} ({item.line}호선)</h3>
+                <h3 className="font-bold text-gray-800 dark:text-gray-100">
+                    {item.line}호선 {item.name}역{item.exitNumber ? ` ${item.exitNumber}번 출구` : ''}
+                </h3>
             </div>
             <div className="space-y-1">
                 {item.upboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`u-${i}`} arrival={arr} color="text-orange-600 dark:text-orange-400" />)}

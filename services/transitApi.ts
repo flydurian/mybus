@@ -8,9 +8,11 @@ const MOCK_BUS_STOPS = [
 ];
 
 const MOCK_SUBWAY_STATIONS = [
-  { id: 'ss_1', name: '강남', line: '2', coords: { lat: 37.4981, lon: 127.0278 } },
-  { id: 'ss_2', name: '삼성', line: '2', coords: { lat: 37.5088, lon: 127.0631 } },
-  { id: 'ss_3', name: '시청', line: '1', coords: { lat: 37.5658, lon: 126.9780 } },
+  { id: 'ss_1', name: '강남', line: '2', coords: { lat: 37.4981, lon: 127.0278 }, exitNumber: 5 },
+  { id: 'ss_2', name: '삼성', line: '2', coords: { lat: 37.5088, lon: 127.0631 }, exitNumber: 3 },
+  { id: 'ss_3', name: '시청', line: '1', coords: { lat: 37.5658, lon: 126.9780 }, exitNumber: 1 },
+  { id: 'ss_4', name: '홍대입구', line: '2', coords: { lat: 37.557, lon: 126.924 }, exitNumber: 9 },
+  { id: 'ss_5', name: '잠실', line: '2', coords: { lat: 37.5133, lon: 127.1001 }, exitNumber: 1 },
 ];
 
 const MOCK_BUS_ROUTES: BusRoute[] = [
@@ -75,6 +77,7 @@ export const fetchNearbyStops = (location: Coordinates): Promise<(BusStop | Subw
         distance: calculateDistance(location, station.coords),
         upboundArrivals: generateSubwayArrivals(),
         downboundArrivals: generateSubwayArrivals(),
+        exitNumber: station.exitNumber,
       }));
 
       const allStops = [...busStops, ...subwayStations];
@@ -110,6 +113,7 @@ export const fetchFavoriteDetails = (ids: string[]): Promise<(BusStop | SubwaySt
                             distance: 0,
                             upboundArrivals: generateSubwayArrivals(),
                             downboundArrivals: generateSubwayArrivals(),
+                            exitNumber: station.exitNumber,
                         });
                     }
                 } else if (id.startsWith('br_')) {
@@ -176,6 +180,7 @@ export const searchTransit = (query: string): Promise<(BusStop | SubwayStation |
                         distance: 0,
                         upboundArrivals: [],
                         downboundArrivals: [],
+                        exitNumber: station.exitNumber,
                     });
                 }
             });

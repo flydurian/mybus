@@ -24,7 +24,13 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
                     favoriteItem = { id: item.id, type: 'bus-stop', name: item.name };
                     break;
                 case 'subway-station':
-                    favoriteItem = { id: item.id, type: 'subway-station', name: item.name, details: `${item.line}호선` };
+                    const exitInfo = item.exitNumber ? ` ${item.exitNumber}번 출구` : '';
+                    favoriteItem = { 
+                        id: item.id, 
+                        type: 'subway-station', 
+                        name: `${item.line}호선 ${item.name}역${exitInfo}`, 
+                        details: `${item.line}호선` 
+                    };
                     break;
                 case 'bus-route':
                     favoriteItem = { id: item.id, type: 'bus-route', name: item.name };
@@ -52,8 +58,8 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
             break;
         case 'subway-station':
             icon = <SubwayIcon className="w-5 h-5 text-orange-500" />;
-            name = `${item.name}역`;
-            description = `${item.line}호선`;
+            name = `${item.line}호선 ${item.name}역`;
+            description = item.exitNumber ? `${item.exitNumber}번 출구` : `${item.line}호선`;
             break;
         case 'bus-route':
             icon = <BusIcon className={`w-5 h-5 text-[${item.color}]`} />;

@@ -28,12 +28,25 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
     const isFavorited = isFavorite(item.id);
 
     const handleFavoriteClick = () => {
-        const favoriteItem: FavoriteItem = {
-            id: item.id,
-            type: item.type,
-            name: item.name,
-            details: item.type === 'subway-station' ? `${item.line}호선` : undefined
-        };
+        let favoriteItem: FavoriteItem;
+        
+        if (item.type === 'subway-station') {
+            const exitInfo = item.exitNumber ? ` ${item.exitNumber}번 출구` : '';
+            favoriteItem = {
+                id: item.id,
+                type: item.type,
+                name: `${item.line}호선 ${item.name}역${exitInfo}`,
+                details: `${item.line}호선`
+            };
+        } else {
+            favoriteItem = {
+                id: item.id,
+                type: item.type,
+                name: item.name,
+                details: undefined
+            };
+        }
+        
         if (isFavorited) {
             removeFavorite(item.id);
         } else {
@@ -47,7 +60,12 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                 <div className="flex items-center">
                     {item.type === 'bus-stop' ? <BusIcon className="w-6 h-6 mr-3 text-green-500" /> : <SubwayIcon className="w-6 h-6 mr-3 text-orange-500" />}
                     <div>
-                        <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">{item.name}</h3>
+                        <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">
+                            {item.type === 'subway-station' 
+                                ? `${item.line}호선 ${item.name}역${item.exitNumber ? ` ${item.exitNumber}번 출구` : ''}`
+                                : item.name
+                            }
+                        </h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400">{Math.round(item.distance)}m</p>
                     </div>
                 </div>

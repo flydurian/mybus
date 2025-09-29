@@ -27,6 +27,7 @@ export type SubwayStation = {
   distance: number;
   upboundArrivals: Arrival[];
   downboundArrivals: Arrival[];
+  exitNumber?: number; // 출구 번호
 };
 
 export type BusRoute = {
