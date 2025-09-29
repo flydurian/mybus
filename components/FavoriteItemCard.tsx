@@ -82,40 +82,50 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
                 <div>
                     <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">상행</div>
                     <div className="space-y-2">
-                        {item.upboundArrivals.slice(0, 2).map((arr, i) => (
-                            <div key={`u-${i}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
-                                            {arr.routeName}
+                        {(() => {
+                            // 행선지별로 그룹핑
+                            const grouped = item.upboundArrivals.reduce((acc, arrival) => {
+                                const key = `${arrival.routeName}-${arrival.destination}`;
+                                if (!acc[key]) {
+                                    acc[key] = [];
+                                }
+                                acc[key].push(arrival);
+                                return acc;
+                            }, {} as { [key: string]: typeof item.upboundArrivals });
+
+                            return Object.entries(grouped).map(([key, arrivals]) => (
+                                <div key={`u-${key}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
+                                                {arrivals[0].routeName}
+                                            </div>
+                                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                                                {arrivals[0].destination}
+                                            </div>
                                         </div>
-                                        <div className="text-xs text-gray-600 dark:text-gray-400">
-                                            {arr.destination}
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        {i === 0 ? (
+                                        <div className="text-right">
                                             <div>
                                                 <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
-                                                    {arr.timeMinutes}분 후
+                                                    {arrivals[0].timeMinutes}분 후
                                                 </div>
-                                                {arr.stationsBefore && (
+                                                {arrivals[0].stationsBefore && (
                                                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                                                        {arr.stationsBefore}정거장 전
+                                                        {arrivals[0].stationsBefore}정거장 전
                                                     </div>
                                                 )}
-                                                {item.upboundArrivals.length > 1 && item.upboundArrivals[1] && (
+                                                {arrivals.length > 1 && arrivals[1] && (
                                                     <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                                        그 다음편이 {item.upboundArrivals[1].timeMinutes}분 후
-                                                        {item.upboundArrivals[1].stationsBefore && ` ${item.upboundArrivals[1].stationsBefore}정거장 전`}
+                                                        그 다음편이 {arrivals[1].timeMinutes}분 후
+                                                        {arrivals[1].stationsBefore && ` ${arrivals[1].stationsBefore}정거장 전`}
                                                     </div>
                                                 )}
                                             </div>
-                                        ) : null}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ));
+                        })()}
                     </div>
                 </div>
 
@@ -123,40 +133,50 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
                 <div>
                     <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">하행</div>
                     <div className="space-y-2">
-                        {item.downboundArrivals.slice(0, 2).map((arr, i) => (
-                            <div key={`d-${i}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
-                                            {arr.routeName}
+                        {(() => {
+                            // 행선지별로 그룹핑
+                            const grouped = item.downboundArrivals.reduce((acc, arrival) => {
+                                const key = `${arrival.routeName}-${arrival.destination}`;
+                                if (!acc[key]) {
+                                    acc[key] = [];
+                                }
+                                acc[key].push(arrival);
+                                return acc;
+                            }, {} as { [key: string]: typeof item.downboundArrivals });
+
+                            return Object.entries(grouped).map(([key, arrivals]) => (
+                                <div key={`d-${key}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
+                                                {arrivals[0].routeName}
+                                            </div>
+                                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                                                {arrivals[0].destination}
+                                            </div>
                                         </div>
-                                        <div className="text-xs text-gray-600 dark:text-gray-400">
-                                            {arr.destination}
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        {i === 0 ? (
+                                        <div className="text-right">
                                             <div>
                                                 <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
-                                                    {arr.timeMinutes}분 후
+                                                    {arrivals[0].timeMinutes}분 후
                                                 </div>
-                                                {arr.stationsBefore && (
+                                                {arrivals[0].stationsBefore && (
                                                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                                                        {arr.stationsBefore}정거장 전
+                                                        {arrivals[0].stationsBefore}정거장 전
                                                     </div>
                                                 )}
-                                                {item.downboundArrivals.length > 1 && item.downboundArrivals[1] && (
+                                                {arrivals.length > 1 && arrivals[1] && (
                                                     <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                                        그 다음편이 {item.downboundArrivals[1].timeMinutes}분 후
-                                                        {item.downboundArrivals[1].stationsBefore && ` ${item.downboundArrivals[1].stationsBefore}정거장 전`}
+                                                        그 다음편이 {arrivals[1].timeMinutes}분 후
+                                                        {arrivals[1].stationsBefore && ` ${arrivals[1].stationsBefore}정거장 전`}
                                                     </div>
                                                 )}
                                             </div>
-                                        ) : null}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ));
+                        })()}
                     </div>
                 </div>
             </div>
