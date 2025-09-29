@@ -19,5 +19,15 @@
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
+  },
+  "overrides": {
+    "@react-leaflet/core": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-leaflet": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }
