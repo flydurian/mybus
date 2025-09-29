@@ -10,6 +10,7 @@ export type Arrival = {
   isLowFloor?: boolean; // 저상버스 여부
   nextArrival?: number; // 다음 도착 시간 (분)
   stationsBefore?: number; // N정거장 전
+  direction?: 'up' | 'down'; // 상행/하행 방향
 };
 
 export type BusStop = {
@@ -32,6 +33,8 @@ export type SubwayStation = {
   downboundArrivals: Arrival[];
   exitNumber?: number; // 출구 번호
   color?: string; // 노선 색상
+  upboundId?: string; // 상행 즐겨찾기 ID
+  downboundId?: string; // 하행 즐겨찾기 ID
 };
 
 export type BusRoute = {

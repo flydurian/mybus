@@ -28,15 +28,15 @@ const SUBWAY_LINE_COLORS: { [key: string]: string } = {
 };
 
 const MOCK_SUBWAY_STATIONS = [
-  { id: 'ss_1', name: '강남', line: '2', coords: { lat: 37.4981, lon: 127.0278 }, exitNumber: 5 },
-  { id: 'ss_2', name: '삼성', line: '2', coords: { lat: 37.5088, lon: 127.0631 }, exitNumber: 3 },
-  { id: 'ss_3', name: '시청', line: '1', coords: { lat: 37.5658, lon: 126.9780 }, exitNumber: 1 },
-  { id: 'ss_4', name: '홍대입구', line: '2', coords: { lat: 37.557, lon: 126.924 }, exitNumber: 9 },
-  { id: 'ss_5', name: '잠실', line: '2', coords: { lat: 37.5133, lon: 127.1001 }, exitNumber: 1 },
-  { id: 'ss_6', name: '종각', line: '1', coords: { lat: 37.5702, lon: 126.9827 }, exitNumber: 3 },
-  { id: 'ss_7', name: '압구정', line: '3', coords: { lat: 37.5272, lon: 127.0285 }, exitNumber: 4 },
-  { id: 'ss_8', name: '명동', line: '4', coords: { lat: 37.5636, lon: 126.9826 }, exitNumber: 6 },
-  { id: 'ss_9', name: '왕십리', line: '5', coords: { lat: 37.5612, lon: 127.0370 }, exitNumber: 2 },
+  { id: 'ss_1', name: '강남', line: '2', coords: { lat: 37.4981, lon: 127.0278 }, exitNumber: 5, upboundId: 'ss_1_up', downboundId: 'ss_1_down' },
+  { id: 'ss_2', name: '삼성', line: '2', coords: { lat: 37.5088, lon: 127.0631 }, exitNumber: 3, upboundId: 'ss_2_up', downboundId: 'ss_2_down' },
+  { id: 'ss_3', name: '시청', line: '1', coords: { lat: 37.5658, lon: 126.9780 }, exitNumber: 1, upboundId: 'ss_3_up', downboundId: 'ss_3_down' },
+  { id: 'ss_4', name: '홍대입구', line: '2', coords: { lat: 37.557, lon: 126.924 }, exitNumber: 9, upboundId: 'ss_4_up', downboundId: 'ss_4_down' },
+  { id: 'ss_5', name: '잠실', line: '2', coords: { lat: 37.5133, lon: 127.1001 }, exitNumber: 1, upboundId: 'ss_5_up', downboundId: 'ss_5_down' },
+  { id: 'ss_6', name: '종각', line: '1', coords: { lat: 37.5702, lon: 126.9827 }, exitNumber: 3, upboundId: 'ss_6_up', downboundId: 'ss_6_down' },
+  { id: 'ss_7', name: '압구정', line: '3', coords: { lat: 37.5272, lon: 127.0285 }, exitNumber: 4, upboundId: 'ss_7_up', downboundId: 'ss_7_down' },
+  { id: 'ss_8', name: '명동', line: '4', coords: { lat: 37.5636, lon: 126.9826 }, exitNumber: 6, upboundId: 'ss_8_up', downboundId: 'ss_8_down' },
+  { id: 'ss_9', name: '왕십리', line: '5', coords: { lat: 37.5612, lon: 127.0370 }, exitNumber: 2, upboundId: 'ss_9_up', downboundId: 'ss_9_down' },
 ];
 
 const MOCK_BUS_ROUTES: BusRoute[] = [
@@ -113,6 +113,8 @@ export const fetchNearbyStops = (location: Coordinates): Promise<(BusStop | Subw
         downboundArrivals: generateSubwayArrivals(),
         exitNumber: station.exitNumber,
         color: SUBWAY_LINE_COLORS[station.line] || '#666666',
+        upboundId: station.upboundId,
+        downboundId: station.downboundId,
       }));
 
       const allStops = [...busStops, ...subwayStations];
@@ -150,6 +152,8 @@ export const fetchFavoriteDetails = (ids: string[]): Promise<(BusStop | SubwaySt
                             downboundArrivals: generateSubwayArrivals(),
                             exitNumber: station.exitNumber,
                             color: SUBWAY_LINE_COLORS[station.line] || '#666666',
+                            upboundId: station.upboundId,
+                            downboundId: station.downboundId,
                         });
                     }
                 } else if (id.startsWith('br_')) {
@@ -218,6 +222,8 @@ export const searchTransit = (query: string): Promise<(BusStop | SubwayStation |
                         downboundArrivals: [],
                         exitNumber: station.exitNumber,
                         color: SUBWAY_LINE_COLORS[station.line] || '#666666',
+                        upboundId: station.upboundId,
+                        downboundId: station.downboundId,
                     });
                 }
             });

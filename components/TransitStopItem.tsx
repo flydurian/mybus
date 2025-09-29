@@ -83,6 +83,30 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
         }
     };
 
+    const handleDirectionFavoriteClick = (direction: 'up' | 'down') => {
+        if (item.type !== 'subway-station') return;
+        
+        const directionId = direction === 'up' ? item.upboundId : item.downboundId;
+        const directionText = direction === 'up' ? '상행' : '하행';
+        
+        if (!directionId) return;
+        
+        const favoriteItem: FavoriteItem = {
+            id: directionId,
+            type: 'subway-station',
+            name: `${item.line}호선 ${item.name}역 ${directionText}`,
+            details: `${item.line}호선 ${directionText}`
+        };
+        
+        const isDirectionFavorited = isFavorite(directionId);
+        
+        if (isDirectionFavorited) {
+            removeFavorite(directionId);
+        } else {
+            addFavorite(favoriteItem);
+        }
+    };
+
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md mb-4 overflow-hidden">
             <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
@@ -95,7 +119,7 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                     <div>
                         <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">
                             {item.type === 'subway-station' 
-                                ? `${item.line}호선 ${item.name}역${item.exitNumber ? ` ${item.exitNumber}번 출구` : ''}`
+                                ? `${item.line}호선 ${item.name}역`
                                 : item.name
                             }
                         </h3>
@@ -112,11 +136,33 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                 ))}
                 {item.type === 'subway-station' && (
                     <>
-                        {item.upboundArrivals.length > 0 && <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">상행</div>}
+                        {item.upboundArrivals.length > 0 && (
+                            <div className="flex items-center justify-between mb-1">
+                                <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">상행</div>
+                                <button 
+                                    onClick={() => handleDirectionFavoriteClick('up')} 
+                                    className="p-1 text-gray-400 hover:text-yellow-500 transition-colors"
+                                    title={isFavorite(item.upboundId || '') ? '상행 즐겨찾기에서 제거' : '상행 즐겨찾기에 추가'}
+                                >
+                                    <StarIcon filled={isFavorite(item.upboundId || '')} className={`w-4 h-4 ${isFavorite(item.upboundId || '') ? 'text-yellow-400' : ''}`} />
+                                </button>
+                            </div>
+                        )}
                         {item.upboundArrivals.map((arrival, index) => (
                              <ArrivalInfo key={`up-${index}`} arrival={arrival} color="custom" customColor={item.color || '#666666'} />
                         ))}
-                         {item.downboundArrivals.length > 0 && <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mt-3 mb-1">하행</div>}
+                         {item.downboundArrivals.length > 0 && (
+                            <div className="flex items-center justify-between mt-3 mb-1">
+                                <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">하행</div>
+                                <button 
+                                    onClick={() => handleDirectionFavoriteClick('down')} 
+                                    className="p-1 text-gray-400 hover:text-yellow-500 transition-colors"
+                                    title={isFavorite(item.downboundId || '') ? '하행 즐겨찾기에서 제거' : '하행 즐겨찾기에 추가'}
+                                >
+                                    <StarIcon filled={isFavorite(item.downboundId || '')} className={`w-4 h-4 ${isFavorite(item.downboundId || '') ? 'text-yellow-400' : ''}`} />
+                                </button>
+                            </div>
+                        )}
                         {item.downboundArrivals.map((arrival, index) => (
                            <ArrivalInfo key={`down-${index}`} arrival={arrival} color="custom" customColor={item.color || '#666666'} />
                         ))}
