@@ -28,6 +28,7 @@ export type SubwayStation = {
   upboundArrivals: Arrival[];
   downboundArrivals: Arrival[];
   exitNumber?: number; // 출구 번호
+  color?: string; // 노선 색상
 };
 
 export type BusRoute = {

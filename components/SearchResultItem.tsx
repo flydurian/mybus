@@ -57,7 +57,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
             description = "버스 정류장";
             break;
         case 'subway-station':
-            icon = <SubwayIcon className="w-5 h-5 text-orange-500" />;
+            icon = <SubwayIcon className="w-5 h-5" style={{ color: item.color || '#666666' }} />;
             name = `${item.line}호선 ${item.name}역`;
             description = item.exitNumber ? `${item.exitNumber}번 출구` : `${item.line}호선`;
             break;

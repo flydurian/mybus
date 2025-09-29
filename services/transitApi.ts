@@ -7,6 +7,26 @@ const MOCK_BUS_STOPS = [
   { id: 'bs_4', name: '홍대입구역', coords: { lat: 37.557, lon: 126.924 } },
 ];
 
+// 지하철 노선별 색상 정보
+const SUBWAY_LINE_COLORS: { [key: string]: string } = {
+  '1': '#0052A4', // 파란색
+  '2': '#00A84D', // 초록색
+  '3': '#EF7C1C', // 주황색
+  '4': '#00A5DE', // 하늘색
+  '5': '#996CAC', // 보라색
+  '6': '#CD7C2F', // 갈색
+  '7': '#747F00', // 올리브색
+  '8': '#E6186C', // 분홍색
+  '9': '#BDB092', // 금색
+  '분당': '#FABE00', // 노란색
+  '수인분당': '#FABE00', // 노란색
+  '경춘': '#0C8E72', // 청록색
+  '신분당': '#D4003B', // 빨간색
+  '공항철도': '#0065A3', // 하늘색
+  '경의중앙': '#77C4A3', // 연두색
+  '수도권': '#F5A200', // 주황색
+};
+
 const MOCK_SUBWAY_STATIONS = [
   { id: 'ss_1', name: '강남', line: '2', coords: { lat: 37.4981, lon: 127.0278 }, exitNumber: 5 },
   { id: 'ss_2', name: '삼성', line: '2', coords: { lat: 37.5088, lon: 127.0631 }, exitNumber: 3 },
@@ -78,6 +98,7 @@ export const fetchNearbyStops = (location: Coordinates): Promise<(BusStop | Subw
         upboundArrivals: generateSubwayArrivals(),
         downboundArrivals: generateSubwayArrivals(),
         exitNumber: station.exitNumber,
+        color: SUBWAY_LINE_COLORS[station.line] || '#666666',
       }));
 
       const allStops = [...busStops, ...subwayStations];
@@ -114,6 +135,7 @@ export const fetchFavoriteDetails = (ids: string[]): Promise<(BusStop | SubwaySt
                             upboundArrivals: generateSubwayArrivals(),
                             downboundArrivals: generateSubwayArrivals(),
                             exitNumber: station.exitNumber,
+                            color: SUBWAY_LINE_COLORS[station.line] || '#666666',
                         });
                     }
                 } else if (id.startsWith('br_')) {
@@ -181,6 +203,7 @@ export const searchTransit = (query: string): Promise<(BusStop | SubwayStation |
                         upboundArrivals: [],
                         downboundArrivals: [],
                         exitNumber: station.exitNumber,
+                        color: SUBWAY_LINE_COLORS[station.line] || '#666666',
                     });
                 }
             });

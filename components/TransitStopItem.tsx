@@ -58,7 +58,11 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md mb-4 overflow-hidden">
             <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                 <div className="flex items-center">
-                    {item.type === 'bus-stop' ? <BusIcon className="w-6 h-6 mr-3 text-green-500" /> : <SubwayIcon className="w-6 h-6 mr-3 text-orange-500" />}
+                    {item.type === 'bus-stop' ? (
+                        <BusIcon className="w-6 h-6 mr-3 text-green-500" />
+                    ) : (
+                        <SubwayIcon className="w-6 h-6 mr-3" style={{ color: item.color || '#666666' }} />
+                    )}
                     <div>
                         <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">
                             {item.type === 'subway-station' 
@@ -81,11 +85,11 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                     <>
                         {item.upboundArrivals.length > 0 && <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">상행</div>}
                         {item.upboundArrivals.map((arrival, index) => (
-                             <ArrivalInfo key={`up-${index}`} arrival={arrival} color="text-orange-600 dark:text-orange-400" />
+                             <ArrivalInfo key={`up-${index}`} arrival={arrival} color={`text-[${item.color || '#666666'}]`} />
                         ))}
                          {item.downboundArrivals.length > 0 && <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mt-3 mb-1">하행</div>}
                         {item.downboundArrivals.map((arrival, index) => (
-                           <ArrivalInfo key={`down-${index}`} arrival={arrival} color="text-orange-600 dark:text-orange-400" />
+                           <ArrivalInfo key={`down-${index}`} arrival={arrival} color={`text-[${item.color || '#666666'}]`} />
                         ))}
                     </>
                 )}
