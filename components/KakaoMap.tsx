@@ -25,6 +25,34 @@ const KakaoMap = React.forwardRef<any, KakaoMapProps>(({
   const markers = useRef<any[]>([]);
 
   useEffect(() => {
+    const loadKakaoMapScript = () => {
+      return new Promise<void>((resolve, reject) => {
+        if (window.kakao && window.kakao.maps) {
+          resolve();
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_API_KEY}`;
+        script.async = true;
+        
+        script.onload = () => {
+          if (window.kakao && window.kakao.maps) {
+            resolve();
+          } else {
+            reject(new Error('카카오맵 API 로드 실패'));
+          }
+        };
+        
+        script.onerror = () => {
+          reject(new Error('카카오맵 스크립트 로드 실패'));
+        };
+        
+        document.head.appendChild(script);
+      });
+    };
+
     const initMap = () => {
       if (!window.kakao || !mapRef.current) return;
 
@@ -88,16 +116,14 @@ const KakaoMap = React.forwardRef<any, KakaoMapProps>(({
       }
     };
 
-    // 카카오맵 API 로드 확인
-    const checkKakaoMap = () => {
-      if (window.kakao && window.kakao.maps) {
+    // 카카오맵 스크립트 로드 및 지도 초기화
+    loadKakaoMapScript()
+      .then(() => {
         initMap();
-      } else {
-        setTimeout(checkKakaoMap, 100);
-      }
-    };
-
-    checkKakaoMap();
+      })
+      .catch((error) => {
+        console.error('카카오맵 로드 오류:', error);
+      });
   }, [center.lat, center.lng, zoom, onLocationSelect]);
 
   // 마커 추가 함수
