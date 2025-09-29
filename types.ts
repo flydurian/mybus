@@ -9,6 +9,7 @@ export type Arrival = {
   timeMinutes: number;
   isLowFloor?: boolean; // 저상버스 여부
   nextArrival?: number; // 다음 도착 시간 (분)
+  stationsBefore?: number; // N정거장 전
 };
 
 export type BusStop = {
