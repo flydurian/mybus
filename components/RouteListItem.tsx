@@ -45,17 +45,12 @@ const RouteListItem: React.FC<RouteListItemProps> = ({ item }) => {
                 <p className="text-sm text-gray-500 dark:text-gray-400">{item.description}</p>
             </div>
             {!isBus && <div className="w-2 h-10 rounded-full" style={{ backgroundColor: item.color }}></div>}
-            <button
-                onClick={handleToggleFavorite}
-                className={`flex-shrink-0 flex items-center space-x-1.5 px-3 py-1.5 text-sm font-semibold rounded-md transition-all duration-200 ${
-                    isFavorited 
-                        ? 'bg-yellow-500 text-white hover:bg-yellow-600' 
-                        : 'bg-blue-500 text-white hover:bg-blue-600'
-                }`}
+            <button 
+                onClick={handleToggleFavorite} 
+                className="p-2 text-gray-400 hover:text-yellow-500 transition-colors"
                 title={isFavorited ? '즐겨찾기에서 제거' : '즐겨찾기에 추가'}
             >
-                <StarIcon className={`w-4 h-4 ${isFavorited ? 'fill-current' : ''}`} />
-                <span>{isFavorited ? '즐겨찾기' : '추가'}</span>
+                <StarIcon filled={isFavorited} className={`w-6 h-6 ${isFavorited ? 'text-yellow-400' : ''}`} />
             </button>
         </div>
     );
