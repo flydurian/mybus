@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.VITE_KAKAO_MAP_API_KEY': JSON.stringify('36c201bef212bfff82c19256fc2892ff')
+        'process.env.VITE_KAKAO_MAP_API_KEY': JSON.stringify(env.VITE_KAKAO_MAP_API_KEY)
       },
       resolve: {
         alias: {
