@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 대중교통</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <style>
+        html { font-family: 'Inter', sans-serif; }
+        @supports (font-variation-settings: normal) {
+            html { font-family: 'Inter var', sans-serif; }
+        }
+
+        /* Custom Scrollbar that appears on hover */
+        .scroll-container {
+            /* For Firefox */
+            scrollbar-width: thin;
+            scrollbar-color: transparent transparent; /* thumb color, track color */
+            transition: scrollbar-color 0.2s ease-in-out;
+        }
+        .scroll-container:hover {
+            scrollbar-color: #a0aec0 transparent;
+        }
+
+        /* For Webkit-based browsers */
+        .scroll-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: transparent;
+            border-radius: 4px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        
+        .scroll-container:hover::-webkit-scrollbar-thumb {
+            background-color: #a0aec0;
+        }
+        
+        /* Dark Mode */
+        .dark .scroll-container:hover {
+            scrollbar-color: #718096 transparent;
+        }
+        
+        .dark .scroll-container:hover::-webkit-scrollbar-thumb {
+            background-color: #718096;
+        }
+
+        /* Leaflet custom icon styles */
+        .leaflet-div-icon {
+            background: transparent;
+            border: none;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react-dom/server": "https://aistudiocdn.com/react-dom@^19.1.1/server.browser.js",
+    "leaflet": "https://aistudiocdn.com/leaflet@^1.9.4",
+    "react-leaflet": "https://aistudiocdn.com/react-leaflet@^4.2.1",
+    "@react-leaflet/core": "https://aistudiocdn.com/react-leaflet@^4.2.1/esm/core.js"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
