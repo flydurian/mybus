@@ -94,14 +94,24 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
-                                            {arr.timeMinutes}분
-                                        </div>
-                                        {arr.stationsBefore && (
-                                            <div className="text-xs text-gray-500 dark:text-gray-400">
-                                                {arr.stationsBefore}정거장 전
+                                        {i === 0 ? (
+                                            <div>
+                                                <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                                                    {arr.timeMinutes}분 후
+                                                </div>
+                                                {arr.stationsBefore && (
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {arr.stationsBefore}정거장 전
+                                                    </div>
+                                                )}
+                                                {item.upboundArrivals.length > 1 && item.upboundArrivals[1] && (
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                        그 다음편이 {item.upboundArrivals[1].timeMinutes}분 후
+                                                        {item.upboundArrivals[1].stationsBefore && ` ${item.upboundArrivals[1].stationsBefore}정거장 전`}
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
@@ -125,14 +135,24 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
-                                            {arr.timeMinutes}분
-                                        </div>
-                                        {arr.stationsBefore && (
-                                            <div className="text-xs text-gray-500 dark:text-gray-400">
-                                                {arr.stationsBefore}정거장 전
+                                        {i === 0 ? (
+                                            <div>
+                                                <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                                                    {arr.timeMinutes}분 후
+                                                </div>
+                                                {arr.stationsBefore && (
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {arr.stationsBefore}정거장 전
+                                                    </div>
+                                                )}
+                                                {item.downboundArrivals.length > 1 && item.downboundArrivals[1] && (
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                        그 다음편이 {item.downboundArrivals[1].timeMinutes}분 후
+                                                        {item.downboundArrivals[1].stationsBefore && ` ${item.downboundArrivals[1].stationsBefore}정거장 전`}
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
