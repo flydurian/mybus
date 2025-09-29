@@ -62,12 +62,12 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
             description = item.exitNumber ? `${item.exitNumber}번 출구` : `${item.line}호선`;
             break;
         case 'bus-route':
-            icon = <BusIcon className={`w-5 h-5 text-[${item.color}]`} />;
+            icon = <BusIcon className="w-5 h-5" style={{ color: item.color || '#666666' }} />;
             name = `${item.name}번 버스`;
             description = item.description;
             break;
         case 'subway-line':
-            icon = <SubwayIcon className={`w-5 h-5 text-[${item.color}]`} />;
+            icon = <SubwayIcon className="w-5 h-5" style={{ color: item.color || '#666666' }} />;
             name = item.name;
             description = item.description;
             break;
