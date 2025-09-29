@@ -77,9 +77,68 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ item }) => {
                     {item.line}호선 {item.name}역{item.exitNumber ? ` ${item.exitNumber}번 출구` : ''}
                 </h3>
             </div>
-            <div className="space-y-1">
-                {item.upboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`u-${i}`} arrival={arr} color="custom" customColor={item.color || '#666666'} />)}
-                {item.downboundArrivals.slice(0, 1).map((arr, i) => <ArrivalInfo key={`d-${i}`} arrival={arr} color="custom" customColor={item.color || '#666666'} />)}
+            <div className="grid grid-cols-2 gap-4 mt-3">
+                {/* 상행 */}
+                <div>
+                    <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">상행</div>
+                    <div className="space-y-2">
+                        {item.upboundArrivals.slice(0, 2).map((arr, i) => (
+                            <div key={`u-${i}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
+                                            {arr.routeName}
+                                        </div>
+                                        <div className="text-xs text-gray-600 dark:text-gray-400">
+                                            {arr.destination}
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                                            {arr.timeMinutes}분
+                                        </div>
+                                        {arr.stationsBefore && (
+                                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                {arr.stationsBefore}정거장 전
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* 하행 */}
+                <div>
+                    <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">하행</div>
+                    <div className="space-y-2">
+                        {item.downboundArrivals.slice(0, 2).map((arr, i) => (
+                            <div key={`d-${i}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
+                                            {arr.routeName}
+                                        </div>
+                                        <div className="text-xs text-gray-600 dark:text-gray-400">
+                                            {arr.destination}
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                                            {arr.timeMinutes}분
+                                        </div>
+                                        {arr.stationsBefore && (
+                                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                {arr.stationsBefore}정거장 전
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
           </>
         );

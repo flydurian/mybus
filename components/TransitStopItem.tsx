@@ -135,10 +135,11 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                     <ArrivalInfo key={index} arrival={arrival} color="text-green-600 dark:text-green-400" />
                 ))}
                 {item.type === 'subway-station' && (
-                    <>
-                        {item.upboundArrivals.length > 0 && (
-                            <div className="flex items-center justify-between mb-1">
-                                <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">상행</div>
+                    <div className="grid grid-cols-2 gap-4">
+                        {/* 상행 */}
+                        <div>
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">상행</div>
                                 <button 
                                     onClick={() => handleDirectionFavoriteClick('up')} 
                                     className="p-1 text-gray-400 hover:text-yellow-500 transition-colors"
@@ -147,13 +148,38 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                                     <StarIcon filled={isFavorite(item.upboundId || '')} className={`w-4 h-4 ${isFavorite(item.upboundId || '') ? 'text-yellow-400' : ''}`} />
                                 </button>
                             </div>
-                        )}
-                        {item.upboundArrivals.map((arrival, index) => (
-                             <ArrivalInfo key={`up-${index}`} arrival={arrival} color="custom" customColor={item.color || '#666666'} />
-                        ))}
-                         {item.downboundArrivals.length > 0 && (
-                            <div className="flex items-center justify-between mt-3 mb-1">
-                                <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">하행</div>
+                            <div className="space-y-2">
+                                {item.upboundArrivals.slice(0, 2).map((arrival, index) => (
+                                    <div key={`up-${index}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
+                                                    {arrival.routeName}
+                                                </div>
+                                                <div className="text-xs text-gray-600 dark:text-gray-400">
+                                                    {arrival.destination}
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                                                    {arrival.timeMinutes}분
+                                                </div>
+                                                {arrival.stationsBefore && (
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {arrival.stationsBefore}정거장 전
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* 하행 */}
+                        <div>
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">하행</div>
                                 <button 
                                     onClick={() => handleDirectionFavoriteClick('down')} 
                                     className="p-1 text-gray-400 hover:text-yellow-500 transition-colors"
@@ -162,11 +188,34 @@ const TransitStopItem: React.FC<TransitStopItemProps> = ({ item }) => {
                                     <StarIcon filled={isFavorite(item.downboundId || '')} className={`w-4 h-4 ${isFavorite(item.downboundId || '') ? 'text-yellow-400' : ''}`} />
                                 </button>
                             </div>
-                        )}
-                        {item.downboundArrivals.map((arrival, index) => (
-                           <ArrivalInfo key={`down-${index}`} arrival={arrival} color="custom" customColor={item.color || '#666666'} />
-                        ))}
-                    </>
+                            <div className="space-y-2">
+                                {item.downboundArrivals.slice(0, 2).map((arrival, index) => (
+                                    <div key={`down-${index}`} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <div className="font-bold text-sm" style={{ color: item.color || '#666666' }}>
+                                                    {arrival.routeName}
+                                                </div>
+                                                <div className="text-xs text-gray-600 dark:text-gray-400">
+                                                    {arrival.destination}
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                                                    {arrival.timeMinutes}분
+                                                </div>
+                                                {arrival.stationsBefore && (
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {arrival.stationsBefore}정거장 전
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>
